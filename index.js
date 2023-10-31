@@ -18,8 +18,8 @@ app.use(cors());
 // Static images
 app.use('/Images', express.static('./Images'))
 //Backend Routes
-app.use("/b2/users", userRoutes);
-app.use("/b2/products", productRoutes);
+app.use("/users", userRoutes);
+app.use("/products", productRoutes);
 
 
 // Database Connection
