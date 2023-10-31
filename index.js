@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors")
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+require('dotenv').config();
 
 // Environment Setup
 const port = 4002;
@@ -17,13 +18,14 @@ app.use(cors());
 
 // Static images
 app.use('/Images', express.static('./Images'))
+
 //Backend Routes
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 
 
 // Database Connection
-mongoose.connect("mongodb+srv://jnbagadiong:admin123@course-booking.7henftv.mongodb.net/E-commerce-API?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true    
 });
