@@ -14,13 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cors(
-		{
-			origin: ["https://croffle-haus.vercel.app/"],
-			methods: ["POST", "GET"],
-			credentials: true
-		}
-));
+app.use(cors());
 
 // Static images
 app.use('/Images', express.static('./Images'))
@@ -31,7 +25,7 @@ app.use("/products", productRoutes);
 
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb+srv://jnbagadiong:admin123@course-booking.7henftv.mongodb.net/E-commerce-API?retryWrites=true&w=majority", {
         useNewUrlParser: true,
         useUnifiedTopology: true    
 });
