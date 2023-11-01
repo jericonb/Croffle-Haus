@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const cors = require("cors")
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
-require('dotenv').config();
 
 // Environment Setup
 const port = 4002;
