@@ -1,57 +1,31 @@
 //Dependencies and Modules
 const Product = require("../models/Product");
 const User = require("../models/User");
-const multer = require('multer');
-const path = require('path');
+
+
 
 // Create product
-module.exports.addProduct = (req, res) => {
+module.exports.addProduct = async (req, res) => {
+  
+  try {
+    const { name, description, price } = req.body;
+    const image = req.file.path;
 
-  let newProduct = new Product({
-      name : req.body.name,
-      description : req.body.description,
-      price : req.body.price,
-      image : req.file.path
-  });
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      image
+    });
 
-  return newProduct.save().then((result, error) => {
+    const savedProduct = await newProduct.save();
 
-      if (error) {
-          return res.send(false);
-      } else {
-          return res.send(result);
-      }
-  })
-  .catch(err => res.send(err))
-};
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'Images')
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname))
+    res.json(savedProduct);
+  } catch (error) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-})
-
-module.exports.uploadImage = multer({
-
-        storage: storage,
-        limits: {fileSize: '100000000000'},
-        fileFilter: (req, file, cb) => {
-          const fileTypes = /jpeg|jpg|png|gif/
-          const mimeType = fileTypes.test(file.mimetype)
-          const extname = fileTypes.test(path.extname(file.originalname))
-        
-          if(mimeType && extname) {
-            return cb(null, true)
-          }
-          cb('Give proper file format to upload')
-          
-        }
-
-      }).single('image');
-
+};
 
 // Retrieve all products
 module.exports.getAllProducts = (req, res) => {

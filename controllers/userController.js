@@ -147,9 +147,9 @@ module.exports.getOrder = (req, res) => {
         .populate({
             path: 'orderedProduct.products.productId',
             model: 'Product',
-            select: 'name price quantity' // Include product name, price, and quantity
+            select: 'name price quantity' 
         })
-        .select('orderedProduct.purchasedOn') // Only select purchasedOn for now
+        .select('orderedProduct.purchasedOn')
         .then((user) => {
             const orders = user.orderedProduct.map(order => {
                 const totalAmount = order.products.reduce((total, product) => {

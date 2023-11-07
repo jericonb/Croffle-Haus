@@ -2,6 +2,7 @@
 const express = require("express");
 const productController = require("../controllers/productController");
 const auth = require("../auth");
+const uploadImage = require('../middleware/uploadMiddleware');
 
 //Routing Component
 const router = express.Router();
@@ -9,7 +10,7 @@ const router = express.Router();
 const {verify, verifyAdmin} = auth;
 
 //Creating Product (Admin) @@@@@@@@@@@@@@@@@@@@@@@@@@
-    router.post("/add", verify, verifyAdmin, productController.uploadImage, productController.addProduct);
+    router.post("/add", verify, verifyAdmin, uploadImage.single('image'), productController.addProduct);
 
 //Retrieving all the products @@@@@@@@@@@@@@@@@@@@@@@
     router.get("/all", productController.getAllProducts);
