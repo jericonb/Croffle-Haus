@@ -11,8 +11,6 @@ const {verify, verifyAdmin} = auth;
 //Creating Product (Admin) @@@@@@@@@@@@@@@@@@@@@@@@@@
     router.post("/add", verify, verifyAdmin, productController.uploadImage, productController.addProduct);
 
-    // router.get("/Images", productController.uploadImage);
-
 //Retrieving all the products @@@@@@@@@@@@@@@@@@@@@@@
     router.get("/all", productController.getAllProducts);
 

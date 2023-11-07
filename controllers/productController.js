@@ -19,7 +19,7 @@ module.exports.addProduct = (req, res) => {
       if (error) {
           return res.send(false);
       } else {
-          return res.send(`Successfully add the ${req.body.name}`);
+          return res.send(result);
       }
   })
   .catch(err => res.send(err))
@@ -37,7 +37,7 @@ const storage = multer.diskStorage({
 module.exports.uploadImage = multer({
 
         storage: storage,
-        limits: {fileSize: '100000000'},
+        limits: {fileSize: '100000000000'},
         fileFilter: (req, file, cb) => {
           const fileTypes = /jpeg|jpg|png|gif/
           const mimeType = fileTypes.test(file.mimetype)
@@ -47,8 +47,10 @@ module.exports.uploadImage = multer({
             return cb(null, true)
           }
           cb('Give proper file format to upload')
+          
         }
-      }).single('image')
+
+      }).single('image');
 
 
 // Retrieve all products
